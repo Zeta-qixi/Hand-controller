@@ -9,7 +9,7 @@ from Pose import Pose
 from pymouse import PyMouse
 m = PyMouse()
 l,h =m.screen_size()
-class Calulate:
+class Cal_feature:
 
     def __init__(self):
         
