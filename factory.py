@@ -5,21 +5,15 @@
 import math
 import time
 from time import sleep
-from Pose import Pose
-from pymouse import PyMouse
-m = PyMouse()
-l,h =m.screen_size()
+
 class Cal_feature:
 
-    def __init__(self):
-        
-        self.Pose = Pose()
+    def __init__(self): 
         self.angles_ = []
-        self.press = 0
 
-    def get_info(self, hm:list):
+    def _raw_data(self, hm:list):
         '''
-        提取手势信息
+        获取手势数据
         '''
         self.plam = hm[0]
         self.figs = []
@@ -27,72 +21,12 @@ class Cal_feature:
             n = i*4
             self.figs.append(hm[n+1:n+5])
 
-        self.status = self.get_hand_pose()
+        self.status = self.cal_pose()
         #print(self.angles_)
         print(self.status)
 
-    def next_(self):
-        '''
-        动作  点 取食指x 手掌y+一个值 #食指y与手掌y距离 触发点击事件
-        '''
-        nx,ny = m.position()
-        xyz = self.figs[1][-1]
-        pose = self.Pose.hand_pose(self.status)
-        action = self.Pose.is_move(xyz)
-        #print(pose)
 
-
-            #---------长按 换 中指-------------#
-        # if self.press == 1:
-        #     xyz = self.figs[2][-1] 
-        x = round(l*xyz[0])
-        y = round(l*xyz[1])
-        #y = round(h*(self.plam[1]-0.3))
-    
-        #移动
-        if pose == 1:
-            
-            
-            m.move(x ,y)
-            # if action =='move':
-            #     times = 500
-            #     dx = (x - nx)/times
-            #     dy = (y - ny)/times           
-            #     for i in range(times):
-            #         time.sleep(0.1/times)
-            #         m.move(i*dx + nx, ny + i*dy)
-            #点击
-            if action == 'click':
-                print('click')
-                m.click(nx, ny)
-        if pose == 2:
-            if self.press == 0:
-                #print('press')
-                m.press(nx,ny)
-                self.press = 1
-                sleep(0.3)
-        if pose == 5:
-            if self.press ==1:
-                m.release(nx,ny)
-                self.press = 0
-                #print('release')
-
-
-                
-        # elif pose == 2:
-        #     if self.press == 0 :
-        #         self.press = 1
-        #         print('press')
-        #     m.press(x,y)
-        # elif pose == 0:
-        #     m.release(nx,ny)
-        #     if self.press == 1:
-        #         self.press = 0
-        #         print('res')
-        
-
-
-    def get_hand_pose(self):
+    def cal_pose(self):
         '''
         返回五指状态信息
         '''
