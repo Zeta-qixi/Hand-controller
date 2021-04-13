@@ -36,7 +36,7 @@ def take_mask_msg(results):
     xyz_ = regularization(mark_list)
     return(s, xyz_)
     
-class CAP:
+class cap_api:
     def __init__(self):
 
         self.cap = None

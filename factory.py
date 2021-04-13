@@ -6,7 +6,7 @@ import math
 import time
 from time import sleep
 
-class Cal_feature:
+class factory:
 
     def __init__(self): 
         self.angles_ = []

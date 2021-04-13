@@ -1,6 +1,6 @@
-from api import CAP
+import cap_api
 
-cap = CAP()
+cap = cap_api()
 for i in cap.start():
     if i:
         x,y,z = i[8]

@@ -1,7 +1,7 @@
 import os
 import random
 import time
-class motion:
+class controller:
 
     def __init__(self):
         self.z = 0
