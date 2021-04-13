@@ -11,7 +11,7 @@ class Cal_feature:
     def __init__(self): 
         self.angles_ = []
 
-    def _raw_data(self, hm:list):
+    def set_raw_data(self, hm:list):
         '''
         获取手势数据
         '''
@@ -26,9 +26,9 @@ class Cal_feature:
         print(self.status)
 
 
-    def cal_pose(self):
+    def cal_pose(self)->list:
         '''
-        返回五指状态信息
+        retuern: 五指状态信息 (二元数组) 
         '''
         figs = self.figs
         self.angles_ = []
@@ -37,14 +37,14 @@ class Cal_feature:
             self.angles_.append(self.cal_angle(fig))
         pose_ = (self.isopen(self.angles_))
         
-        return pose_
+        return pose_ 
         
     def isopen(self, angles:list)->list:
-        open = []
         '''
         计算手指状态判定
-            判定一个角度 :弯曲 / 竖直
+        retuern: 0/1 (弯曲 / 竖直)
         '''
+        open = []
         #拇指
         if angles[0][0] < 25:
             open.append(1)
@@ -64,8 +64,8 @@ class Cal_feature:
         '''
         计算手指关节向量
 
-            input:一根根手指的4个节点数据 单个数据代表相对手掌的xyz位置信息
-            output:每一节的向量信息 ->list
+            input: 一根根手指的4个节点数据 单个数据代表相对手掌的xyz位置信息
+            return: 每一节的向量信息 ->list
 
             -- 目前用这两个 所构成的角度 辨识度最高 <30 ; >120  拇指 <50 >80
         '''
