@@ -22,7 +22,7 @@ def is_static(xy:list):
         return True
     return False
 
-def static_1(a, b):
+def static_l2(a, b):
     '''
     l2长度
     '''
@@ -36,21 +36,33 @@ class controller:
 
     def __init__(self):
 
-        self.onclick = 0
+        self.click_times = 0
         self.xy = [0,0]
-    def get(self, marks:list):
-        
-        if static_1(self.xy,marks[0]):
-            self.move(marks[0])
-            self.onclick = 0
 
-        self.onclick += 1
+    def get(self, marks:list, pose :list):
+        '''
+        marks : 最近5个时间序列的 食指关节xyz坐标list
+        pose : 动作
+        '''
+        if pose == 2:
+            self.scroll(marks[0])
+        elif pose == 0:
+            pass
+
+        else:
+
+            if static_l2(self.xy, marks[0]):
+                self.move(marks[0])
+                self.click_times = 0
+
+            self.click_times += 1
+            
+
+            if self.click_times >= 30:
+                self.click_times = 0
+                self.click(self.xy)
         self.xy = marks[0]
 
-        if self.onclick >= 30:
-            self.onclick = 0
-            self.click(self.xy)
-        #self.click(marks)
 
     def move(self,xy:list):
         
@@ -62,8 +74,11 @@ class controller:
         m.click(xy[0]*w,xy[1]*h)
         
 
-    def scroll(self):
+    def scroll(self, xy:list):
         x,y = m.position()
-        m.click(x,y)
-        sleep(0.1) 
-        m.scroll(1)
+        sleep(0.1)
+        if(self.xy[1]-xy[1] > 0):
+            m.scroll(1)
+        else:
+            m.scroll(-1)
+        sleep (1)

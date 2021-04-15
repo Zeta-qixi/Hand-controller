@@ -4,16 +4,30 @@
 import math
 import time
 from time import sleep
+
 '''
 [21][3]
 只用 x y
 '''
+
+def hand_pose(figs:list):
+
+    if figs == [0, 1, 0, 0 ,0]:
+        return 1
+    elif figs == [0, 1, 1, 0, 0]:
+        return 2
+    elif figs == [1, 1, 1, 1, 1]:
+        return 5
+    elif figs == [0, 0, 0, 0, 0]:
+        return 0
+    else:
+        return 'none'
 class factory:
 
     def __init__(self): 
-        self.angles_ = []
+        pass
 
-    def set_raw_data(self, hm:list):
+    def make_(self, hm:list):
         '''
         获取手势数据
         '''
@@ -23,9 +37,8 @@ class factory:
             n = i*4
             self.figs.append(hm[n+1:n+5])
 
-        self.status = self.cal_pose()
+        return hand_pose(self.cal_pose())
         #print(self.angles_)
-        print(self.status)
 
 
     def cal_pose(self)->list:
