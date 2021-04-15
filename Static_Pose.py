@@ -4,7 +4,7 @@
 from math import fabs
 class Pose:
     def __init__(self):
-        self.pose = None   #改变时向web传递数据
+        self.pose_list = []
 
         self.stop_times = 0 #静止times 可以用于渲染html
         self._plot = [0, 0, 0] #x,y,z
@@ -14,15 +14,15 @@ class Pose:
     def hand_pose(self, figs:list):
   
         if figs == [0, 1, 0, 0 ,0]:
-            return 1
+            self.pose_list.append(1)
         elif figs == [0, 1, 1, 0, 0]:
-            return 2
+            self.pose_list.append(2)
         elif figs == [1, 1, 1, 1, 1]:
-            return 5
+            self.pose_list.append(5)
         elif figs == [0, 0, 0, 0, 0]:
-            return 0
+            self.pose_list.append(0)
         else:
-            return figs
+            self.pose_list.append('none')
 
 
     def is_move(self, now):

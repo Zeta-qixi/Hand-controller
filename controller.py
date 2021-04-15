@@ -4,7 +4,7 @@
 
 import os
 import random
-import time
+from time import sleep
 import numpy as np
 from pymouse import PyMouse
 import asyncio
@@ -27,8 +27,8 @@ def static_1(a, b):
     l2长度
     '''
     
-    if ((a[0] - b[0])**2 + (a[1] - b[1])**2) > 0.00002:
-
+    if ((a[0] - b[0])**2 + (a[1] - b[1])**2) > 0.00003:
+        
         return True
     return False
 
@@ -42,10 +42,13 @@ class controller:
         
         if static_1(self.xy,marks[0]):
             self.move(marks[0])
-            self.onclick += 1
+            self.onclick = 0
+
+        self.onclick += 1
         self.xy = marks[0]
 
-        if self.onclick >= 20:
+        if self.onclick >= 30:
+            self.onclick = 0
             self.click(self.xy)
         #self.click(marks)
 
@@ -57,4 +60,10 @@ class controller:
 
     def click(self, xy:list):
         m.click(xy[0]*w,xy[1]*h)
+        
 
+    def scroll(self):
+        x,y = m.position()
+        m.click(x,y)
+        sleep(0.1) 
+        m.scroll(1)
