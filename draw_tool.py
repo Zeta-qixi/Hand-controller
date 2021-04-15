@@ -1,15 +1,23 @@
+'''
+画图调整的
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-class test_tool:
+class draw_tool:
     def __init__(self):
         self.data = []
+        
 
 
-
-    def getdata(self, d):
+    def add_data(self, d:list):
+        '''
+        [x,y,z]
+        '''
         self.data.append(d)
+        D = np.array(self.data).T
+
 
     
     def draw_tabel(self):
@@ -30,8 +38,7 @@ class test_tool:
         #print(np.max(D[3] - D[1]) - np.min(D[3] - D[1]))
         print('-------------')
         
-        print('x:'+ str(np.max(D[0]) - np.min(D[0])))
-        print(np.max(D[1]) - np.min(D[1]))
+
         plt.show()
 
     def show(self):

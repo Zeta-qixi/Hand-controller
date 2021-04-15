@@ -1,14 +1,13 @@
+'''
+调用mediapipe、摄像头 获取数据
+'''
 import os
 import time
 import sys
 import cv2
 import numpy as np
-from PIL import Image
 
-import mark_rc
 import mediapipe as mp
-from activity import motion
-from mark_rc import Cal_feature as cal_f
 
 
 

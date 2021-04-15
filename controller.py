@@ -1,24 +1,60 @@
+'''
+光标控制器
+'''
+
 import os
 import random
 import time
+import numpy as np
+from pymouse import PyMouse
+import asyncio
+m = PyMouse()
+w,h = m.screen_size()
+
+def is_static(xy:list):
+    '''
+    计算标准差
+    '''
+    D = np.array(xy).T
+    x = np.std(D[0],ddof=1)
+    y = np.std(D[1],ddof=1)
+    if x < 0.01 and y < 0.03:
+        return True
+    return False
+
+def static_1(a, b):
+    '''
+    l2长度
+    '''
+    
+    if ((a[0] - b[0])**2 + (a[1] - b[1])**2) > 0.00002:
+
+        return True
+    return False
+
 class controller:
 
     def __init__(self):
-        self.z = 0
+
         self.onclick = 0
+        self.xy = [0,0]
+    def get(self, marks:list):
+        
+        if static_1(self.xy,marks[0]):
+            self.move(marks[0])
+            self.onclick += 1
+        self.xy = marks[0]
 
-    def frist(self, mark):
-        self.z = mark
+        if self.onclick >= 20:
+            self.click(self.xy)
+        #self.click(marks)
 
-    def click(self, z):
-        #print(z)
-        if (self.z == 0 or self.onclick == 1):
-            self.z = z
-            self.onclick = 0
-            
-        if self.z - z > 0.1 and self.onclick == 0:
-            self.onclick = 1
-            print ('click')
-            time.sleep(1)
+    def move(self,xy:list):
+        
+            m.move(xy[0]*w,xy[1]*h)
+        
 
-        return ('')
+
+    def click(self, xy:list):
+        m.click(xy[0]*w,xy[1]*h)
+

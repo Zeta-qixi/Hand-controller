@@ -1,11 +1,13 @@
 '''
-[21][3]
-只用 x y
+加工数据的
 '''
 import math
 import time
 from time import sleep
-
+'''
+[21][3]
+只用 x y
+'''
 class factory:
 
     def __init__(self): 
