@@ -9,13 +9,19 @@ from time import sleep
 [21][3]
 只用 x y
 '''
+def static_l2(a, b):
+    d = ((a[0] - b[0])**2 + (a[1] - b[1])**2)**(1/2)
+    if d < 0.045:
+        return True
 
 def hand_pose(figs:list):
 
     if figs == [0, 1, 0, 0 ,0]:
         return 1
-    elif figs == [0, 1, 1, 0, 0]:
+    elif figs[1:] == [1, 1, 0, 0]:
         return 2
+    elif figs == [0,0, 1, 1, 1]:
+        return 3
     elif figs == [1, 1, 1, 1, 1]:
         return 5
     elif figs == [0, 0, 0, 0, 0]:
@@ -30,6 +36,7 @@ class factory:
     def make_(self, hm:list):
         '''
         获取手势数据
+        hm : 21 * 3
         '''
         self.plam = hm[0]
         self.figs = []
@@ -37,6 +44,8 @@ class factory:
             n = i*4
             self.figs.append(hm[n+1:n+5])
 
+        if static_l2(hm[4], hm[8]):
+            return('p')
         return hand_pose(self.cal_pose())
         #print(self.angles_)
 
@@ -61,7 +70,8 @@ class factory:
         '''
         open = []
         #拇指
-        if angles[0][0] < 25:
+        
+        if angles[0][0] < 20:
             open.append(1)
         else:
             open.append(0)

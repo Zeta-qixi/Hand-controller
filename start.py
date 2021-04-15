@@ -14,6 +14,10 @@ import time
 # try:
 fig_list = []
 pose_list = []
+'''
+fig_list : 食指坐标
+pose_list : 手势值
+'''
 x=y=z=0
 for i in cap.start():
     if i:
@@ -21,11 +25,11 @@ for i in cap.start():
         pose_list.append(ft.make_(i))
     
     else:
-        pose_list.append([0])
+        pose_list.append('none')
         fig_list.append([0,0,0])
 
     if len(fig_list)>=10:
-        con.get(fig_list[-5:], pose_list[-5:])
+        con.get(fig_list[1:], pose_list[1:])
         
         fig_list.pop(0)
         pose_list.pop(0)
