@@ -1,4 +1,4 @@
-from .c1 import controller
+from .c1 import *
 
 
 import os
@@ -6,6 +6,7 @@ import random
 from time import sleep
 import numpy as np
 
+C = mac_controller()
 
 def is_static(xy:list):
     '''
@@ -32,7 +33,7 @@ class controller:
         self.is_press = 0
         self.click_times = 0
         self.xy = [0,0]
-        self.C = controller()
+        
 
     def get(self, marks:list, pose_list :list):
         '''
@@ -47,29 +48,31 @@ class controller:
             pass        
 
         elif pose == {'p'}:
-            self.C.press(marks[-1])
+            C.press(marks[-1])
 
         elif pose == {2}:
-            self.C.scroll(marks)
+            C.scroll(marks)
             
         elif pose == {5}:
             if self.is_press == 1:
                 self.is_press = 0
-                self.C.release(marks[-1])
+
+                C.release(marks[-1])
 
         elif pose == {0}:
             pass
 
         elif pose == {1}:
             if static_l2(self.xy, marks[-1]):
-                self.C.move(marks[-1])
-                self.C.click_times = 0
+                self.click_times = 0
+                C.move(marks[-1])
+                
 
             self.click_times += 1
             
             if self.click_times >= 30:
                 self.click_times = 0
-                self.C.click(marks[-1])
+                C.click(marks[-1])
 
         self.xy = marks[-1]
         
