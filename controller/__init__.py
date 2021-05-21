@@ -1,4 +1,4 @@
-from .c1 import win_controller
+from .c1 import controller
 
 
 import os
@@ -32,7 +32,7 @@ class controller:
         self.is_press = 0
         self.click_times = 0
         self.xy = [0,0]
-        self.C = win_controller()
+        self.C = controller()
 
     def get(self, marks:list, pose_list :list):
         '''

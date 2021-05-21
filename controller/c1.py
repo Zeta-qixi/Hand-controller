@@ -2,14 +2,13 @@ from pymouse import PyMouse
 m = PyMouse()
 w,h = m.screen_size()
 
-class win_controller:
+class controller:
     def __init__(self):
         pass
+
     def move(self,xy:list):
             m.move(xy[0]*w,xy[1]*h)
         
-
-
     def click(self, xy:list):
         m.click(xy[0]*w,xy[1]*h)
         
