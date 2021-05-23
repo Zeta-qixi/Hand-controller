@@ -76,3 +76,7 @@ class controller:
 
         self.xy = marks[-1]
         
+
+    def hand_pose(self, pose):
+        if pose == self.pose:
+            return (self.marks)
